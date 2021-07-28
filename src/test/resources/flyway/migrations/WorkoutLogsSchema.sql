@@ -18,7 +18,7 @@ CREATE TABLE exercises (
   exercise_id varchar(30) NOT NULL,
   category enum('CARDIO', 'STRENGTH') NOT NULL,
   exercise_name varchar(60) NOT NULL,
-  target_area enum('CHEST', 'SHOULDER', 'BACK', 'ARMS', 'ABS', 'LEGS', 'HEART') NOT NULL
+  target_area enum('CHEST', 'SHOULDER', 'BACK', 'ARMS', 'ABS', 'LEGS', 'HEART') NOT NULL,
   PRIMARY KEY (exercise_pk),
   UNIQUE KEY (exercise_id)
 );

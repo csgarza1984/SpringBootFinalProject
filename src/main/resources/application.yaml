@@ -1,3 +1,8 @@
+spring:
+  datasource:    password: workoutlogs
+    username: workoutlogs
+    url: jdbc:mysql://localhost:3306/workoutlogs
+
 logging:
   level:
     root: warn

@@ -6,7 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import com.promineotech.workout.entity.Workout;
+import com.promineotech.workout.entity.Exercise;
+import com.promineotech.workout.entity.ExerciseCategory;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -22,19 +23,19 @@ import io.swagger.v3.oas.annotations.servers.Server;
 public interface WorkoutLogsController {
   // @formatter:off
   @Operation(
-      summary = "Returns a list of Workouts",
-      description = "Returns a list of Workouts given a category",
+      summary = "Returns a list of Exercises",
+      description = "Returns a list of Exercises given a category",
       responses = {
           @ApiResponse(responseCode = "200", 
-              description = "A list of Workouts is returned.", 
+              description = "A list of Exercises is returned.", 
               content = @Content(
                   mediaType = "application/json", 
-                  schema = @Schema(implementation = Workout.class))),
+                  schema = @Schema(implementation = Exercise.class))),
           @ApiResponse(responseCode = "400", 
               description = "The request parameter is invalid.", 
               content = @Content(mediaType = "application/json")),
           @ApiResponse(responseCode = "404", 
-              description = "No Workouts were found with the input criteria.", 
+              description = "No Exercises were found with the input criteria.", 
               content = @Content(mediaType = "application/json")),
           @ApiResponse(responseCode = "500", 
               description = "An unplanned error occurred.", 
@@ -50,9 +51,9 @@ public interface WorkoutLogsController {
   ) // Operation annotation
   @GetMapping
   @ResponseStatus(code = HttpStatus.OK)
-  List<Workout> fetchWorkouts(
+  List<Exercise> fetchWorkouts(
       @RequestParam(required = false) 
-        String category);
+        ExerciseCategory category);
   // @formatter:on
-
+  
 } // WorkoutLogsController interface
