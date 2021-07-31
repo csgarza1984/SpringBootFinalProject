@@ -1,5 +1,5 @@
 package com.promineotech.workout.entity;
 
-public enum WorkoutTarget {
+public enum ExerciseTarget {
   CHEST, SHOULDER, BACK, ARMS, ABS, LEGS, HEART
 }
