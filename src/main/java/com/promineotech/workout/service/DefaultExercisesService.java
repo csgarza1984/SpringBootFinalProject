@@ -6,23 +6,23 @@ import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.promineotech.workout.dao.WorkoutLogsDao;
+import com.promineotech.workout.dao.ExcercisesDao;
 import com.promineotech.workout.entity.Exercise;
 import com.promineotech.workout.entity.ExerciseCategory;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class DefaultWorkoutLogsService implements WorkoutLogsService {
+public class DefaultExercisesService implements ExercisesService {
   
   @Autowired
-  private WorkoutLogsDao workoutLogsDao;
+  private ExcercisesDao exercisesDao;
 
   @Transactional(readOnly = true)
   public List<Exercise> fetchExercises(ExerciseCategory category) {
     log.info("The fetchExercises method was called with category={}", category);
     
-    List<Exercise> exercises =  workoutLogsDao.fetchExercises(category);
+    List<Exercise> exercises =  exercisesDao.fetchExercises(category);
     
     if(exercises.isEmpty()) {
       String msg = String.format("No exercises found with category=%s", 

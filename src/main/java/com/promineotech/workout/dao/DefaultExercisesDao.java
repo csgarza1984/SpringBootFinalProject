@@ -8,15 +8,15 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import com.promineotech.workout.entity.Exercise;
 import com.promineotech.workout.entity.ExerciseCategory;
 import com.promineotech.workout.entity.ExerciseTarget;
 import lombok.extern.slf4j.Slf4j;
 
-@Component
+@Service
 @Slf4j
-public class DefaultWorkoutLogsDao implements WorkoutLogsDao {
+public class DefaultExercisesDao implements ExcercisesDao {
 
   @Autowired
   private NamedParameterJdbcTemplate jdbcTemplate;

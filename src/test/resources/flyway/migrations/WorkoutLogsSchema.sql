@@ -16,7 +16,7 @@ CREATE TABLE people (
 CREATE TABLE exercises (
   exercise_pk int unsigned NOT NULL AUTO_INCREMENT,
   exercise_id varchar(30) NOT NULL,
-  category enum('CARDIO', 'STRENGTH') NOT NULL,
+  category enum('CARDIO', 'STRENGTH'),
   exercise_name varchar(60) NOT NULL,
   target_area enum('CHEST', 'SHOULDER', 'BACK', 'ARMS', 'ABS', 'LEGS', 'HEART') NOT NULL,
   PRIMARY KEY (exercise_pk),
@@ -26,7 +26,7 @@ CREATE TABLE exercises (
 CREATE TABLE workouts (
   workout_pk int unsigned NOT NULL AUTO_INCREMENT,
   person_fk int unsigned NOT NULL,
-  workout_date date NOT NULL,
+  workout_date varchar(10) NOT NULL,
   PRIMARY KEY (workout_pk),
   FOREIGN KEY (person_fk) REFERENCES people (person_pk) ON DELETE CASCADE
 );
