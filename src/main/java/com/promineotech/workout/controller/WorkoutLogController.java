@@ -50,9 +50,41 @@ public interface WorkoutLogController {
               description = "The workout as JSON")         
       } //parameters list
   ) // Operation annotation
+  
   @PostMapping
   @ResponseStatus(code = HttpStatus.CREATED)
   Workout createWorkoutLog(@Valid @RequestBody WorkoutRequest workoutRequest);
   // @formatter:on
+  
+  @Operation(
+      summary = "Delete a workout",
+      description = "Deletes an existing workout.",
+      responses = {
+          @ApiResponse(responseCode = "200", 
+              description = "The created workout was deleted.", 
+              content = @Content(
+                  mediaType = "application/json", 
+                  schema = @Schema(implementation = Workout.class))),
+          @ApiResponse(responseCode = "400", 
+              description = "The requested parameter is invalid.", 
+              content = @Content(mediaType = "application/json")),
+          @ApiResponse(responseCode = "404", 
+              description = "No workout detail was found with the input criteria.", 
+              content = @Content(mediaType = "application/json")),
+          @ApiResponse(responseCode = "500", 
+              description = "An unplanned error occurred.", 
+              content = @Content(mediaType = "application/json"))
+      }, // responses
+      parameters = {
+          @Parameter(
+              name = "deleteRequest", 
+              required = true, 
+              description = "The workout as JSON")         
+      } //parameters list
+  ) // Operation annotation
+  
+  @PostMapping("/delete")
+  @ResponseStatus(code = HttpStatus.OK)
+  Workout deleteWorkoutLog(@Valid @RequestBody WorkoutRequest workoutRequest); 
   
 } // WorkoutLogsController interface

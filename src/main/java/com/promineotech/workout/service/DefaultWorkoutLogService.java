@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.promineotech.workout.dao.WorkoutLogDao;
+import com.promineotech.workout.entity.DeleteRequest;
 import com.promineotech.workout.entity.Exercise;
 import com.promineotech.workout.entity.ExerciseDetails;
 import com.promineotech.workout.entity.Person;
@@ -21,7 +22,6 @@ public class DefaultWorkoutLogService implements WorkoutLogService {
   @Transactional
   @Override
   public Workout createWorkoutLog(WorkoutRequest workoutRequest) {
-//    Person person = workoutLogDao.fetchPerson(workoutRequest.getPerson());
     Person person = getPerson(workoutRequest);
     String workoutDate = getWorkoutDate(workoutRequest);
     List<Exercise> exercises = getExercise(workoutRequest);
@@ -29,8 +29,16 @@ public class DefaultWorkoutLogService implements WorkoutLogService {
       
     return workoutLogDao.saveWorkout(person, workoutDate, exercises, exerciseDetails);
   }
+  
+  @Override
+  public Workout deleteWorkoutLog(WorkoutRequest workoutRequest) {
+    Person person = getPerson(workoutRequest);
+    String workoutDate = getWorkoutDate(workoutRequest);
+     
+    return workoutLogDao.deleteWorkout(person, workoutDate);
+  }
 
-  /**
+ /**
    * 
    * @param workoutRequest
    * @return
@@ -56,6 +64,13 @@ public class DefaultWorkoutLogService implements WorkoutLogService {
         .orElseThrow(() -> new NoSuchElementException(
             "Invalid Date" + workoutRequest.getWorkoutDate() + " was entered."));
   }
+  
+  private String getWorkoutDate(DeleteRequest deleteRequest) {
+    return workoutLogDao.fetchWorkoutDate(deleteRequest.getWorkoutDate())
+        .orElseThrow(() -> new NoSuchElementException(
+            "Invalid Date" + deleteRequest.getWorkoutDate() + " was entered."));
+  }
+
 
   /**
    * 
@@ -67,6 +82,18 @@ public class DefaultWorkoutLogService implements WorkoutLogService {
         .orElseThrow(() -> new NoSuchElementException(
             "Person with ID=" + workoutRequest.getPerson() + " was not found."));
   }
+  
+  /**
+   * 
+   * @param deleteRequest
+   * @return
+   */
+  private Person getPerson(DeleteRequest deleteRequest) {
+    return workoutLogDao.fetchPerson(deleteRequest.getPersonId())
+        .orElseThrow(() -> new NoSuchElementException(
+            "Person with ID=" + deleteRequest.getPersonId() + " was not found."));
+  }
+
 
 
 } // DefaultWorkoutLogService class
