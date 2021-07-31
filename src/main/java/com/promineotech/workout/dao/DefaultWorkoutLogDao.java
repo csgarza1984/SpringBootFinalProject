@@ -234,20 +234,32 @@ public class DefaultWorkoutLogDao implements WorkoutLogDao {
     });
   } // fetchExerciseDetails method
 
-  @Override
-  public void deleteWorkout(Long person_fk, String workoutDate) {
-    // @formatter:off
-    String sql = ""
-        + "DELETE * "
-        + "FROM workouts "
-        + "WHERE person_fk = :person_fk "
-        + "AND workout_id = :workoutDate";
-    // @formatter:on    
+ @Override
+  public Workout deleteWorkout(Person person, String workoutDate) {
     
-    Map<String, Object> params = new HashMap<>();
-    params.put("person_fk", personPK);
-    params.put("workout_date", workoutDate);
-
+   SqlParams params = generateDeleteSql(person, workoutDate);
+   
+   jdbcTemplate.update(params.sql, params.source);
+   
+    return null;
   }
+
+private SqlParams generateDeleteSql(Person person, String workoutDate) {
+  // @formatter:off
+  String sql = ""
+       + "DELETE "
+       + "FROM workouts "
+       + "WHERE person_fk = :person_fk "
+       + "AND workout_date = :workoutDate";
+   // @formatter:on 
+  
+  SqlParams params = new SqlParams();
+  
+  params.sql = sql;
+  params.source.addValue("person_fk", person);
+  params.source.addValue("workout_date", workoutDate);
+  
+  return params;
+}
 
 } // class

@@ -24,6 +24,6 @@ public interface WorkoutLogDao {
   List<ExerciseDetails> fetchExerciseDetails(
       List<String> exerciseDetails);
   
-  void deleteWorkout(Long person_fk, String workoutDate);
+  Workout deleteWorkout(Person person, String workoutDate);
 
 }

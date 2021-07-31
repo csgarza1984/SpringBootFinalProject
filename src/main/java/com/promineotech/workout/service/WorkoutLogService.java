@@ -7,4 +7,6 @@ public interface WorkoutLogService {
 
   Workout createWorkoutLog(WorkoutRequest workoutRequest);
 
+  Workout deleteWorkoutLog(WorkoutRequest workoutRequest);
+
 }
