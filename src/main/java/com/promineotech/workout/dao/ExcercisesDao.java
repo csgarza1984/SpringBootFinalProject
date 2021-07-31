@@ -4,7 +4,7 @@ import java.util.List;
 import com.promineotech.workout.entity.Exercise;
 import com.promineotech.workout.entity.ExerciseCategory;
 
-public interface WorkoutLogsDao {
+public interface ExcercisesDao {
 
   /**
    * 

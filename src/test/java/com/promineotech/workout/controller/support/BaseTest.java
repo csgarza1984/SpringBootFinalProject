@@ -14,8 +14,21 @@ public class BaseTest {
   private TestRestTemplate restTemplate;
   
   //retrieve the uri of the request being sent to the application running under STS
-  protected String getBaseUri() {
-    return String.format("http://localhost:%d/workouts", serverPort);
+ /**
+  * 
+  * @return
+  */
+  protected String getBaseUriForExercises() {
+    return String.format("http://localhost:%d/exercises", serverPort);
   } // getBaseUri method
   
+  /**
+   * 
+   * @return
+   */
+  protected String getBaseUriForWorkouts() {
+    return String.format("http://localhost:%d/workouts", serverPort);
+  } // getBaseUri method
+
+
 } // BaseTest Class

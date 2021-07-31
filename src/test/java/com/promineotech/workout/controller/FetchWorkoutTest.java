@@ -2,11 +2,9 @@ package com.promineotech.workout.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
-import static org.mockito.Mockito.doThrow;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
-import javax.management.RuntimeErrorException;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -25,7 +23,7 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import com.promineotech.workout.controller.support.FetchWorkoutTestSupport;
 import com.promineotech.workout.entity.Exercise;
 import com.promineotech.workout.entity.ExerciseCategory;
-import com.promineotech.workout.service.WorkoutLogsService;
+import com.promineotech.workout.service.ExercisesService;
 
 class FetchWorkoutTest {
   
@@ -37,11 +35,15 @@ class FetchWorkoutTest {
       "classpath:flyway/migrations/WorkoutLogData.sql"},
       config = @SqlConfig(encoding = "utf-8"))  
   class TestsThatDoNotPolluteTheApplicationContext extends FetchWorkoutTestSupport {
+
+    /**
+     * 
+     */
     @Test
     void testThatExercisesAreReturnedWhenAValidCategoryIsSupplied() {
       // Given:  a valid category and URI
       ExerciseCategory category = ExerciseCategory.STRENGTH;
-      String uri = String.format("%s?category=%s", getBaseUri(), category);
+      String uri = String.format("%s?category=%s", getBaseUriForExercises(), category);
       
       //System.out.println(uri);
       
@@ -58,9 +60,7 @@ class FetchWorkoutTest {
       List<Exercise> expected = buildExpected();
       
       System.out.println(expected);
-      assertThat(actual).isEqualTo(expected);
-      
-
+      assertThat(actual).isEqualTo(expected);      
     } // testThatExercisesAreReturnedWhenAValidCategoryIsSupplied method
 
     /**
@@ -70,7 +70,7 @@ class FetchWorkoutTest {
     void testThatAnErrorMessageIsReturnedWhenAnUnknownExerciseNameIsSupplied() {
       // Given:  a valid exercise name and URI
       String exerciseName = "Unknown Value";
-      String uri = String.format("%s?exerciseName=%s", getBaseUri(), exerciseName);
+      String uri = String.format("%s?exercise_name=%s", getBaseUriForExercises(), exerciseName);
       
       //System.out.println(uri);
       
@@ -93,7 +93,7 @@ class FetchWorkoutTest {
     void testThatAnErrorMessageIsReturnedWhenAnInvalidValueIsSupplied(
         String category, String reason) {
       // Given:  a valid category and URI
-      String uri = String.format("%s?category=%s", getBaseUri(), category);
+      String uri = String.format("%s?category=%s", getBaseUriForExercises(), category);
       
       //System.out.println(uri);
       
@@ -147,7 +147,7 @@ class FetchWorkoutTest {
       config = @SqlConfig(encoding = "utf-8"))  
   class TestsThatPolluteTheApplicationContext extends FetchWorkoutTestSupport {
     @MockBean
-    private WorkoutLogsService workoutLogsService;
+    private ExercisesService workoutLogsService;
     
     /**
      * 
